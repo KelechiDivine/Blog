@@ -1,6 +1,5 @@
 package com.demonblog.service;
 
-import com.demonblog.exception.EmailCantBeNullException;
 import com.demonblog.exception.GeneralException;
 import com.demonblog.exception.IdAlreadyExistException;
 import com.demonblog.exception.UserNameAlreadyExistException;
