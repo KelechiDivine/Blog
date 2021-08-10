@@ -1,44 +1,29 @@
 package com.demonblog.model;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import javax.persistence.*;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
 
-@Entity
+//@Entity
 @AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
+
 
 public class Register {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-	
-	
-	@Column(nullable = false, unique = true)
-	private String email;
-	
-	@Column(nullable = false, unique = true)
-	private String password;
-	
-	@Column(unique = true)
-	@NotNull
-	private String mobile;
-	
-	@Column(nullable = false)
-	private String countryName;
-	
-	@Column(nullable = false, unique = true)
-	private String username;
-	
-	
-	@Column(nullable = false)
-	private String address;
-	
-	@Column(nullable = true)
-	private int countryCode;
-	
+	private final Integer registerId;
+	private final String email;
+	private final String confirmEmail;
+	private final String mobileNumber;
+	private final String password;
+	private final String confirmPassword;
 	
 }
