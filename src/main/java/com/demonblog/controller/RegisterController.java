@@ -17,7 +17,7 @@ public class RegisterController {
 	
 	private static final List<Register> REGISTER_LIST = Arrays.asList(
 			new Register(1, "okoroaforkelechi123@gmai.com",
-					"okoroaforkelechi123@gmail.com",
+					"kelechiDivine",
 					"08082167764",
 					"keLechi5363@#",
 					"keLechi5363@#"
@@ -42,7 +42,7 @@ public class RegisterController {
 		return REGISTER_LIST.stream()
 				.filter(register -> registerId.equals(register.getRegisterId()))
 				.findFirst()
-				.orElseThrow(() -> new RegisterErrorException("A user with id " + registerId + "doesn't exist"));
+				.orElseThrow(() -> new RegisterErrorException("A user with id " + registerId + " doesn't exist"));
 	}
 
 }
