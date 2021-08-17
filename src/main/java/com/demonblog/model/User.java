@@ -4,8 +4,9 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Table(name = "User")
+//@Table(name = "User")
 @Entity
 @Getter
 @Setter
@@ -40,5 +41,10 @@ public class User {
 	@Column(nullable = false, unique = true)
 	@NotNull
 	private String username;
+	
+	@NotNull
+	@OneToMany
+	private List<Comments> comments;
+	
 	
 }

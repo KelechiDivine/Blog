@@ -3,25 +3,19 @@ package com.demonblog.model;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 
 public class Comments {
 	
 	@Id
-	@GeneratedValue
-	@Column(columnDefinition = "BINARY(16)")
-	private UUID id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	
 	@Column(nullable = false, length = 150)
 	private String commentatorName;
