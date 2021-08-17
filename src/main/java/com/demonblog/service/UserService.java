@@ -1,12 +1,15 @@
 package com.demonblog.service;
 
+import com.demonblog.exception.CommentException;
 import com.demonblog.exception.GeneralException;
 import com.demonblog.exception.IdAlreadyExistException;
 import com.demonblog.exception.UserNameAlreadyExistException;
+import com.demonblog.model.Comments;
 import com.demonblog.model.User;
 import com.demonblog.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,8 @@ import java.util.Optional;
 
 
 public class UserService {
+	
+	@Autowired
 	private final UserRepository userRepository;
 	
 	@GetMapping
@@ -51,7 +56,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public void updateUser(String username, String email, Integer id) throws GeneralException, UserNameAlreadyExistException {
+	public void updateUser(String username, String email, Integer id) throws GeneralException, UserNameAlreadyExistException{
 		
 		User user = userRepository.findById(id).orElseThrow(GeneralException::new);
 		log.info("A user with these id " + user.getId() + " doesn't exists.");
@@ -74,6 +79,7 @@ public class UserService {
 			}
 		}
 		
+		
 		if (username != null && !Objects.equals(user.getUsername(), username)){
 			Optional<User> userOptional = userRepository
 					.findUserByUsername(username);
@@ -84,7 +90,13 @@ public class UserService {
 			
 			user.setUsername(username);
 		}
-	}
-	
+//
+//		if (!Objects.equals(user.getComments(), comments)){
+//			Optional<User> optionalUser = userRepository.findUserByComments(comments);
+//
+//			if (optionalUser.isEmpty()){
+//				throw new CommentException("Comment is null");
+//			}
+		}
 }
 

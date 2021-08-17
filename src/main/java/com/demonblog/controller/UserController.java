@@ -6,15 +6,18 @@ import com.demonblog.exception.UserNameAlreadyExistException;
 import com.demonblog.model.User;
 import com.demonblog.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(path = "/UserControllers")
+@RequestMapping(path = "/userControllers")
 @AllArgsConstructor
 
+@RestController
 public class UserController {
+	
+	@Autowired
 	private final UserService userService;
 	
 	@GetMapping("/getUser")
@@ -38,6 +41,7 @@ public class UserController {
 			
 			@PathVariable("userId") String username,
 			@RequestParam(required = false) String email,
+//			@RequestParam(required = false) String comments,
 			@RequestParam(required = false) Integer id) throws GeneralException, UserNameAlreadyExistException {
 		
 		userService.updateUser(username, email, id);

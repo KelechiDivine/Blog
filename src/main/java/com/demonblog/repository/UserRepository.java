@@ -15,11 +15,10 @@ public interface UserRepository extends JpaRepository <User, Integer> {
 	User findUserByFirstnameAndLastname(String firstname, String lastname);
 	User findUserByFirstname(String userFirstName);
 	User findUserByLastname(String userLastName);
-	User findUserByComments(List<Comments> comments);
-	
+//	User findUserByComments(List<Comments> comments);
 	Optional<User> findUserByUsername(String username);
 	
-	@Query("SELECT email FROM User WHERE email= ?1")
-	Optional<User> findUserByEmail(@NonNull String email);
+	@Query("SELECT comments FROM User WHERE comments= ?1")
+	Optional<User> findUserByComments(@NonNull String comment);
 	
 }

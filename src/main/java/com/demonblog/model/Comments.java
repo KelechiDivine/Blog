@@ -7,7 +7,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -15,7 +17,7 @@ public class Comments {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	private Integer id;
 	
 	@Column(nullable = false, length = 150)
 	private String commentatorName;

@@ -34,11 +34,6 @@ public class Post {
 	@Column(nullable = false)
 	private LocalDateTime localDateTime;
 	
-	
-	@Column(nullable = true)
-	private String comment;
-	
-	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Comments> comments;
 	

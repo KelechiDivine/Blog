@@ -6,9 +6,12 @@ import com.demonblog.repository.CommentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Slf4j
@@ -19,24 +22,39 @@ public class CommentService {
 	
 	@GetMapping
 	// get all user comment
-	public List<Comments> getAllUserComment(){
+	public List<Comments> getAllUserComment() {
 		return commentRepository.findAll();
 	}
 	
-	public void aNewComment(Comments comments){
+	public void aNewComment(Comments comments) {
 		commentRepository.save(comments);
 	}
 	
 	public void deleteComment(Integer commentId) throws CommentException {
 		boolean commentAlreadyExist = commentRepository.existsById(commentId);
 		
-		if (!commentAlreadyExist){
+		if (!commentAlreadyExist) {
 			throw new CommentException("Comment has been deleted.");
 		}
 	}
 	
-//	public void updateComment(String commentContent){
-//		boolean updateComment = commentRepository.findCommentsByContent(commentContent.get)
-//		Optional<Comments>
-//	}
+	@Transactional
+	
+	public void updateComment(String content, Integer id) throws CommentException {
+		Comments comments = commentRepository.findById(id).orElseThrow(CommentException::new);
+		log.info("Comment doesn't exists.");
+		
+		if (content.isEmpty()) {
+			log.info("Comment can't be null");
+		}
+		
+		// update content in a comment
+		
+		if (comments != null && !Objects.equals(comments.getContent(), content)) {
+			comments.setContent(content);
+		}
+		
+		
+		
+	}
 }
