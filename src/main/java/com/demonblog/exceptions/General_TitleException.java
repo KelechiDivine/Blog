@@ -1,8 +1,16 @@
-package com.demonblog.exception;
+package com.demonblog.exceptions;
 
-public class UserNameAlreadyExistException extends Exception{
-	public UserNameAlreadyExistException(String ex){
-		super(ex);
+public class General_TitleException extends Exception{
+	/**
+	 * Constructs a new exception with the specified detail message.  The
+	 * cause is not initialized, and may subsequently be initialized by
+	 * a call to {@link #initCause}.
+	 *
+	 * @param message the detail message. The detail message is saved for
+	 *                later retrieval by the {@link #getMessage()} method.
+	 */
+	public General_TitleException(String message) {
+		super(message);
 	}
 	
 	/**
@@ -19,7 +27,7 @@ public class UserNameAlreadyExistException extends Exception{
 	 *                unknown.)
 	 * @since 1.4
 	 */
-	public UserNameAlreadyExistException(String message, Throwable cause) {
+	public General_TitleException(String message, Throwable cause) {
 		super(message, cause);
 	}
 }

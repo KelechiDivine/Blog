@@ -1,12 +1,14 @@
 package com.demonblog.model;
 
 import com.sun.istack.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
-//@Table(name = "User")
+
 @Entity
 @Getter
 @Setter
@@ -20,31 +22,33 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 50)
 	private String lastname;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 50)
 	private String firstname;
 	
-	@Column(unique = true)
+	@Column(unique = true, nullable = false, length = 50)
 	private String email;
 	
-	@Column(unique = true)
+	@Column(unique = true, nullable = false, length = 20)
 	private String mobile;
 	
 	@Column(nullable = false, length = 250)
 	private String about;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 30)
 	private String countryName;
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, length = 30)
 	@NotNull
 	private String username;
 	
-	@NotNull
-	@OneToMany
-	private List<Comments> comments;
+	@JoinColumn(nullable = false)
+	@OneToOne
+	private Post userPost;
 	
-	
+	public boolean alreadyExits() {
+		return false;
+	}
 }

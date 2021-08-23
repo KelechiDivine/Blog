@@ -1,16 +1,6 @@
-package com.demonblog.exception;
+package com.demonblog.exceptions;
 
-public class EmailCantBeNullException extends Exception{
-	
-	/**
-	 * Constructs a new exception with {@code null} as its detail message.
-	 * The cause is not initialized, and may subsequently be initialized by a
-	 * call to {@link #initCause}.
-	 */
-	public EmailCantBeNullException() {
-		super();
-	}
-	
+public class General_UserAlreadyExists extends Exception{
 	/**
 	 * Constructs a new exception with the specified detail message.  The
 	 * cause is not initialized, and may subsequently be initialized by
@@ -19,7 +9,7 @@ public class EmailCantBeNullException extends Exception{
 	 * @param message the detail message. The detail message is saved for
 	 *                later retrieval by the {@link #getMessage()} method.
 	 */
-	public EmailCantBeNullException(String message) {
+	public General_UserAlreadyExists(String message) {
 		super(message);
 	}
 	
@@ -37,7 +27,7 @@ public class EmailCantBeNullException extends Exception{
 	 *                unknown.)
 	 * @since 1.4
 	 */
-	public EmailCantBeNullException(String message, Throwable cause) {
+	public General_UserAlreadyExists(String message, Throwable cause) {
 		super(message, cause);
 	}
 }

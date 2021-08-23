@@ -1,7 +1,7 @@
 package com.demonblog.service;
 
-import com.demonblog.exception.CommentException;
-import com.demonblog.model.Comments;
+import com.demonblog.exceptions.General_CommentException;
+import com.demonblog.model.Comment;
 import com.demonblog.repository.CommentRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,50 +11,50 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Slf4j
 @Service
 
+@Transactional
+
+
+
 public class CommentService {
+	
 	private final CommentRepository commentRepository;
+	private final Comment comment;
 	
 	@GetMapping
-	// get all user comment
-	public List<Comments> getAllUserComment() {
+	public List<Comment> getAllComment() {
 		return commentRepository.findAll();
 	}
 	
-	public void aNewComment(Comments comments) {
-		commentRepository.save(comments);
+	public void createComment(Comment newComment) {
+		commentRepository.save(newComment);
 	}
 	
-	public void deleteComment(Integer commentId) throws CommentException {
-		boolean commentAlreadyExist = commentRepository.existsById(commentId);
+	public void deleteComment(Integer commentId){
+	
+		boolean comment1 = commentRepository.existsById(commentId);
 		
-		if (!commentAlreadyExist) {
-			throw new CommentException("Comment has been deleted.");
+		if (comment1 == comment.deleteComment()){
+			log.info("Comment deleted successfully...");
 		}
 	}
 	
-	@Transactional
-	
-	public void updateComment(String content, Integer id) throws CommentException {
-		Comments comments = commentRepository.findById(id).orElseThrow(CommentException::new);
-		log.info("Comment doesn't exists.");
+	public void updateComment(String commentText, Integer contextId) throws General_CommentException {
 		
-		if (content.isEmpty()) {
-			log.info("Comment can't be null");
+		Comment commentExistInRepo = commentRepository.findById(contextId).orElseThrow();
+		
+		if (commentExistInRepo != null && !Objects.equals(commentExistInRepo.
+				getCommentTextField(), commentText)){
+			commentExistInRepo.setCommentTextField(commentText);
+			commentRepository.save(commentExistInRepo);
 		}
 		
-		// update content in a comment
-		
-		if (comments != null && !Objects.equals(comments.getContent(), content)) {
-			comments.setContent(content);
+		if (commentText.isEmpty()){
+			throw new General_CommentException("Comment field can't be empty.");
 		}
-		
-		
-		
 	}
 }

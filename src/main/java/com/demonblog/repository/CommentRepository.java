@@ -1,20 +1,19 @@
 package com.demonblog.repository;
 
-import com.demonblog.model.Comments;
-import com.sun.istack.NotNull;
+import com.demonblog.model.Comment;
+import com.demonblog.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Repository
-public interface CommentRepository extends JpaRepository<Comments, Integer> {
+public interface CommentRepository extends JpaRepository<Comment, Integer> {
 	
-	Comments findCommentsByCommentatorName(String ownerOfComment);
-	Comments findCommentsByContent(String commentContent);
-
-	@Query("SELECT commentatorName FROM Comments WHERE commentatorName= ?1")
-	Optional<Comments> findByCommentatorNameExists(@NotNull String commentatorNameExist);
+	Comment findCommentsByCommentUser(User commentUser);
+	Comment findCommentsById(Integer id);
+	
+	Optional<Comment> findCommentsByCommentIsCreatedBefore(LocalDate commentIsCreated);
 	
 }

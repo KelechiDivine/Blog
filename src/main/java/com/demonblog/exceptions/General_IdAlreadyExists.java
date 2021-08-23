@@ -1,15 +1,6 @@
-package com.demonblog.exception;
+package com.demonblog.exceptions;
 
-public class LoginError extends Exception{
-	/**
-	 * Constructs a new exception with {@code null} as its detail message.
-	 * The cause is not initialized, and may subsequently be initialized by a
-	 * call to {@link #initCause}.
-	 */
-	public LoginError() {
-		super();
-	}
-	
+public class General_IdAlreadyExists extends Exception{
 	/**
 	 * Constructs a new exception with the specified detail message.  The
 	 * cause is not initialized, and may subsequently be initialized by
@@ -18,7 +9,7 @@ public class LoginError extends Exception{
 	 * @param message the detail message. The detail message is saved for
 	 *                later retrieval by the {@link #getMessage()} method.
 	 */
-	public LoginError(String message) {
+	public General_IdAlreadyExists(String message) {
 		super(message);
 	}
 	
@@ -36,7 +27,7 @@ public class LoginError extends Exception{
 	 *                unknown.)
 	 * @since 1.4
 	 */
-	public LoginError(String message, Throwable cause) {
+	public General_IdAlreadyExists(String message, Throwable cause) {
 		super(message, cause);
 	}
 }

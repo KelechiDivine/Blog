@@ -1,13 +1,14 @@
-package com.demonblog.exception;
+package com.demonblog.exceptions;
 
-public class RegisterErrorException extends Exception{
-	
+import java.security.PrivilegedActionException;
+
+public class General_PostException extends Exception{
 	/**
 	 * Constructs a new exception with {@code null} as its detail message.
 	 * The cause is not initialized, and may subsequently be initialized by a
 	 * call to {@link #initCause}.
 	 */
-	public RegisterErrorException() {
+	public General_PostException() {
 		super();
 	}
 	
@@ -19,7 +20,7 @@ public class RegisterErrorException extends Exception{
 	 * @param message the detail message. The detail message is saved for
 	 *                later retrieval by the {@link #getMessage()} method.
 	 */
-	public RegisterErrorException(String message) {
+	public General_PostException(String message) {
 		super(message);
 	}
 	
@@ -37,7 +38,25 @@ public class RegisterErrorException extends Exception{
 	 *                unknown.)
 	 * @since 1.4
 	 */
-	public RegisterErrorException(String message, Throwable cause) {
+	public General_PostException(String message, Throwable cause) {
 		super(message, cause);
+	}
+	
+	/**
+	 * Constructs a new exception with the specified cause and a detail
+	 * message of {@code (cause==null ? null : cause.toString())} (which
+	 * typically contains the class and detail message of {@code cause}).
+	 * This constructor is useful for exceptions that are little more than
+	 * wrappers for other throwables (for example, {@link
+	 * PrivilegedActionException}).
+	 *
+	 * @param cause the cause (which is saved for later retrieval by the
+	 *              {@link #getCause()} method).  (A {@code null} value is
+	 *              permitted, and indicates that the cause is nonexistent or
+	 *              unknown.)
+	 * @since 1.4
+	 */
+	public General_PostException(Throwable cause) {
+		super(cause);
 	}
 }

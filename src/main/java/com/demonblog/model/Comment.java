@@ -13,18 +13,24 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Comments {
+public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(nullable = false, length = 150)
-	private String commentatorName;
-	
 	@CreationTimestamp
-	private LocalDate dataCreated;
+	private LocalDate commentIsCreated;
 	
 	@Column(nullable = false)
-	private String content;
+	private String commentTextField;
+	
+	@JoinColumn(nullable = false)
+	@OneToOne
+	private User commentUser;
+	
+	
+	public boolean deleteComment(){
+		return true;
+	}
 }

@@ -7,8 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -23,28 +21,25 @@ public class Post {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(nullable = false)
-	private String username;
-	
-	
-	@Column(nullable = false, length = 1000)
-	private String text;
-	
+	@Column(nullable = false, length = 500)
+	private String postTextField;
 	
 	@Column(nullable = false)
-	private LocalDateTime localDateTime;
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Comments> comments;
-	
-	public void addComment(Comments... comment) {
-		if (this.comments == null)
-			this.comments = new ArrayList<>();
-		this.comments.addAll(Arrays.asList(comment));
-		
-	}
+	private LocalDateTime isCreated;
 	
 	@JoinColumn(nullable = false)
-	@ManyToOne
+	@OneToOne
 	private User user;
+	
+	@Column(nullable = false)
+	@OneToMany
+	private List<Comment> comments;
+	
+	@JoinColumn(nullable = false)
+	@OneToOne
+	private Title title;
+	
+	public boolean deletePost(){
+		return true;
+	}
 }

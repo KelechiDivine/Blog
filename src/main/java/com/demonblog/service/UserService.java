@@ -1,102 +1,88 @@
 package com.demonblog.service;
 
-import com.demonblog.exception.CommentException;
-import com.demonblog.exception.GeneralException;
-import com.demonblog.exception.IdAlreadyExistException;
-import com.demonblog.exception.UserNameAlreadyExistException;
-import com.demonblog.model.Comments;
+import com.demonblog.exceptions.General_IdAlreadyExists;
+import com.demonblog.exceptions.General_UserAlreadyExists;
 import com.demonblog.model.User;
 import com.demonblog.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+
 @AllArgsConstructor
 @Service
 @Slf4j
-
+@Transactional
 
 public class UserService {
 	
-	@Autowired
 	private final UserRepository userRepository;
 	
 	@GetMapping
-	public List<User> getUser(){
+	
+	public List<User> getAllUser() {
 		return userRepository.findAll();
 	}
 	
-	//creating a new user
-	public void addNewUser(User user) throws IdAlreadyExistException {
-		Optional<User> userOptional = userRepository.findById(user.getId());
+	//create a new user
+	
+	public void createUser(User newUser) throws General_UserAlreadyExists {
+		User userIsPresent = userRepository.findUserByUsername(newUser.getUsername());
 		
-		if (userOptional.isPresent()){
-			throw new IdAlreadyExistException("User with id " + user.getId() + "already exist");
+		if (userIsPresent.alreadyExits()){
+			throw new General_UserAlreadyExists("A user with name " + newUser.getUsername() + " already exists." );
 		}
-		userRepository.save(user);
+		else {
+			userRepository.save(newUser);
+		}
 	}
 	
-	//deleting a user
-	
-	public void deleteUser(Integer userId) throws IdAlreadyExistException {
-		boolean userIdExist = userRepository.existsById(userId);
+	public void deleteUser(String username) throws General_UserAlreadyExists {
 		
-		if (!userIdExist){
-			throw new IdAlreadyExistException("user with this id doesn't exist.",
-					new IllegalStateException());
+		if (!userNameExist()){
+			throw new General_UserAlreadyExists("user with this name doesn't exist.");
 		}
-		userRepository.deleteById(userId);
+		else {
+			userRepository.deleteByUsername(username);
+		}
 	}
 	
-	@Transactional
-	public void updateUser(String username, String email, Integer id) throws GeneralException, UserNameAlreadyExistException{
+	private boolean userNameExist() {
+		return true;
+	}
+	
+	public void updateUser(String usernameField, Integer userId, String userEmail)
+			throws General_IdAlreadyExists {
 		
-		User user = userRepository.findById(id).orElseThrow(GeneralException::new);
-		log.info("A user with these id " + user.getId() + " doesn't exists.");
+		Optional<User> id = userRepository.findById(userId);
+		Optional<User> email = userRepository.findUserByEmail(userEmail);
+		User name = userRepository.findUserByUsername(usernameField);
 		
-		if (username != null && username.length() > 0 && !Objects.equals(user.getUsername(), username)){
-			user.setUsername(username);
+		log.info("A user with name " + name.getUsername() + " doesn't exists.");
+		
+		if (usernameField.length() > 0 && !Objects.equals(name.getUsername(), usernameField)) {
+			name.setUsername(usernameField);
+			log.info("User name updated successfully.!!");
 		}
 		
-		if (email != null && !Objects.equals(user.getEmail(), email)){
-			
-			//Check if email field is null
-			
-			if (email.isEmpty()){
-				log.info("Please provide an email");
+		if (id.isPresent()){
+			throw new General_IdAlreadyExists("A user with id " + userId + "already exist");
+		}
+		
+		if (!userEmail.contains("@.com")){
+			if (userEmail.length()<=0){
+				log.info("This email " + userEmail + " is invalid");
 			}
-			
-			//Check if email doesn't contains "@gmail.com"
-			if (!email.contains("@gmail.com")){
-				log.info("Invalid email");
-			}
 		}
 		
-		
-		if (username != null && !Objects.equals(user.getUsername(), username)){
-			Optional<User> userOptional = userRepository
-					.findUserByUsername(username);
-			if (userOptional.isPresent()){
-				throw new UserNameAlreadyExistException("User with email "+
-						user.getUsername() + "already exist");
-			}
-			
-			user.setUsername(username);
+		if (email.isPresent() && !Objects.equals(name.getEmail(), email)){
+			name.setEmail(userEmail);
 		}
-//
-//		if (!Objects.equals(user.getComments(), comments)){
-//			Optional<User> optionalUser = userRepository.findUserByComments(comments);
-//
-//			if (optionalUser.isEmpty()){
-//				throw new CommentException("Comment is null");
-//			}
-		}
+	}
 }
-
